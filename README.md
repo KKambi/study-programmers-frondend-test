@@ -118,3 +118,53 @@ if (mqList.matches) {
 }
 ```
 
+</br>
+
+### 4. 그리드 이미지 Lazy Loading
+- 스크롤을 내리면서 이미지가 일정 비율 viewport에 들어왔을 때 loading
+- Intersection Observer API를 이용해 구현
+- [링크](http://blog.hyeyoonjung.com/2019/01/09/intersectionobserver-tutorial/)에 매우 자세하게 나와있음
+
+</br>
+
+***Intersection API***
+1. 어떤 컨테이너릁 탐색할 것인지, 마진은 어떻게 할 것인지, 어떤 비율만큼 교차되었을 때 해당 콜백을 실행할 것인지 등의 options 변수 선언
+```javascript
+const options = {
+  root: null,   //null이면 브라우저의 viewport
+  rootMargin: '0px 0px 30px 0px',
+  threshold: 0
+}
+```
+
+</br>
+
+2. Intersection Observer 인스턴스 생성
+   - 콜백함수(탐지되었을 때 실행할 함수)와 options를 인자로 생성
+   - 이미지를 로딩해야 하므로, data-src attribute에 URL을 넣어놓았다가, src attribute에 할당하는 방법 사용
+   - 한 번 불러왔다면 더 이상 observe할 필요 없으므로 unobserve
+   - 해당 콜백은 IntersectionObserverEntry 객체의 배열을 반환하므로 루프를 돌며 해당 객체의 프로퍼티를 활용해야 함
+```javascript
+const io = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      observer.unobserve(entry.target);
+    }
+  })
+}, options)
+```
+
+</br>
+
+3. 관찰할 대상을 등록
+   - 여러 개의 그리드 이미지를 querySelectorAll로 탐색한 뒤, 루프 돌려서 등록 가능
+```javascript
+const images = document.querySelectorAll('.image');
+images.forEach((el) => {
+  io.observe(el);
+})
+```
+
+</br>
+
