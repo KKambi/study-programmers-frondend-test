@@ -56,5 +56,8 @@ export default class App {
       target: this.root,
       data: gridTestData,
     });
+
+    //그리드 옵저버 설정
+    photoGrid.setObserver();
   }
 }

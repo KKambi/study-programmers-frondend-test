@@ -1,3 +1,5 @@
+import ObserverFactory from "../../utils/ObserverFactory.mjs";
+
 export default class Grid {
   grid = null;
   data = null;
@@ -19,6 +21,26 @@ export default class Grid {
     this.render();
   }
 
+  setObserver() {
+    const factory = new ObserverFactory();
+    const options = {
+      root: null,
+      threshold: 0,
+    };
+
+    const photos = document.querySelectorAll(".grid-img");
+    factory.setObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.src = entry.target.dataset.src;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    factory.startObserve(photos);
+  }
+
   render() {
     if (this.data === null) return;
 
@@ -38,7 +60,7 @@ export default class Grid {
 
       const row = `
         <div class="grid-row data-row-${i}">
-          <img class="grid-img" src="${url}">
+          <img class="grid-img" data-src="${url}">
         </div>
       `;
 
