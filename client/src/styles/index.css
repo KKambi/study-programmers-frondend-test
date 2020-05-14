@@ -1,3 +1,44 @@
+/*
+ * 변수 설정
+ */
+body.light {
+  --font-color: black;
+  --bg-color: white;
+}
+
+body.dark {
+  --font-color: white;
+  --bg-color: black;
+}
+
+/*
+ * Body
+ */
+body {
+  color: var(--font-color);
+  background-color: var(--bg-color);
+}
+
+/*
+ * Button
+ */
+button {
+  border: 1px solid skyblue;
+  border-radius: 5px;
+  color: var(--font-color);
+  background-color: var(--bg-color);
+  padding: 5px;
+}
+
+button:hover {
+  background-color: skyblue;
+  color: white;
+  cursor: pointer;
+}
+
+/*
+ * 그리드
+ */
 @media all and (max-width: 450px) {
   .grid-wrapper {
     display: grid;
