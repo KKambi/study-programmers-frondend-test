@@ -2,14 +2,19 @@
 - 2020 Dev-matching (프론트엔드) 과정을 복습하며 관련 내용을 학습하는 프로젝트
 
 ---
+</br>
 
 ## HTML/CSS 관련
+
+</br>
 
 ### 1. Semantic MarkUp
 - 웹페이지는 html을 통해 구성되는 문서
 - 의미있는`semantic` 구조`markup`을 구성하자
 - 내가 채울 데이터를 가장 잘 설명하고 나타내는 tag를 선택
 - h1이 아닌 span으로 css를 주어 나타내면 non-semantic
+
+</br>
 
 ***시맨틱 태그 목록***
 
@@ -25,6 +30,8 @@
 | mark    | 현재 맥락에서 중요하여 하이라이트할 부분                 |
 | details | 열고 닫을 수 있는 상세 정보 위젯, 자식으로 <summary> 사용 |
 | time    | 시간의 특정 지점 또는 구간                        |
+
+</br>
 
 ### 2. 미디어 쿼리 in Grid
 - 디바이스의 화면 가로 크기에 따라, row당 column 개수 조절하기
@@ -44,6 +51,8 @@
   grid-gap: 10px;
 }
 ```
+
+</br>
 
 ***반응형 그리드 구현***
 - 디바이스의 width에 따라 컬럼 개수가 달라지는 반응형 그리드
@@ -78,5 +87,34 @@
 }
 ```
 
+</br>
+
 ### 3. 다크 모드 토글 버튼
 - 버튼을 누르면 화이트모드/다크모드가 토글되는 버튼 구현
+
+</br>
+
+***토글 버튼 구현***
+- 버튼 click event로 클릭 시 로컬 스토리지에서 현재 theme변수값을 가져옴
+- 변수값에 따라 적절한 반대값을 body className에 적용
+- theme에 따라 폰트컬러와 백그라운드컬러 css 변수를 다르게 정의
+- 하위 요소에서 해당 변수를 사용하면 된다.
+- localStorage.getItem() / localStorage.setItem()
+
+</br>
+
+***다크 모드 탐지***
+- window.matchMedia(미디어쿼리스트링)
+- 해당 OS의 선호 모드는 @media (prefers-color-scheme: dark){ ... } 으로 선언
+- matches 참/거짓 값을 통해 분기를 태울 수 있다.
+
+```javascript
+const mqList = window.matchMedia("(prefers-color-scheme: dark)");
+if (mqList.matches) {
+  body.className = "dark";
+} else {
+  //3. 선호 모드가 없다면 기본 light 모드
+  body.className = "light";
+}
+```
+

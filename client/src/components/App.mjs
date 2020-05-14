@@ -21,7 +21,7 @@ export default class App {
       body.className = userTheme;
     } else {
       //2. 토글한 적이 없다면, OS 선호 모드가 있는지 확인
-      const mqList = window.matchMedia("@media (prefers-color-scheme: dark)");
+      const mqList = window.matchMedia("(prefers-color-scheme: dark)");
       if (mqList.matches) {
         body.className = "dark";
       } else {
