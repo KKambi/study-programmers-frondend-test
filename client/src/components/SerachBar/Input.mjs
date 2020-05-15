@@ -1,10 +1,10 @@
 export default class Input {
-  input = null;
+  $input = null;
   className = null;
 
   constructor({ target, className }) {
     const input = document.createElement("div");
-    this.input = input;
+    this.$input = input;
 
     target.insertAdjacentElement("beforeend", input);
 
@@ -14,7 +14,7 @@ export default class Input {
   }
 
   render() {
-    this.input.innerHTML = `
+    this.$input.innerHTML = `
       <input class="${this.className}">
       </input>
     `;

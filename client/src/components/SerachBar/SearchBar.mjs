@@ -2,7 +2,7 @@ import Input from "./Input.mjs";
 import Button from "./Button.mjs";
 
 export default class SearchBar {
-  searchBar = null;
+  $searchBar = null;
 
   constructor({ target, className }) {
     const searchBar = document.createElement("div");
@@ -10,7 +10,7 @@ export default class SearchBar {
 
     target.insertAdjacentElement("beforeend", searchBar);
 
-    this.searchBar = searchBar;
+    this.$searchBar = searchBar;
 
     this.render();
   }
@@ -41,26 +41,26 @@ export default class SearchBar {
 
   render() {
     const serachInput = new Input({
-      target: this.searchBar,
+      target: this.$searchBar,
       className: "search-input",
     });
 
     const searchButton = new Button({
-      target: this.searchBar,
+      target: this.$searchBar,
       onClick: this.search,
       className: "search-button",
       buttonName: "검색",
     });
 
     const randomButton = new Button({
-      target: this.searchBar,
+      target: this.$searchBar,
       onClick: this.randomSerch,
       className: "randomSearch-button",
       buttonName: "랜덤",
     });
 
     const themeToggleButton = new Button({
-      target: this.searchBar,
+      target: this.$searchBar,
       onClick: this.toggleTheme,
       className: "themeToggle-button",
       buttonName: "★",

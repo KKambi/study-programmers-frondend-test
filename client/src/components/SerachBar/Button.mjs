@@ -1,12 +1,12 @@
 export default class Button {
-  buttonWrapper = null;
+  $buttonWrapper = null;
   onClick = null;
   className = null;
   buttonName = null;
 
   constructor({ target, className, buttonName, onClick }) {
     const buttonWrapper = document.createElement("div");
-    this.buttonWrapper = buttonWrapper;
+    this.$buttonWrapper = buttonWrapper;
 
     target.insertAdjacentElement("beforeend", buttonWrapper);
 
@@ -19,12 +19,12 @@ export default class Button {
 
   render() {
     const button = document.createElement("button");
-    button.className = this.className;
+    button.classList.add(this.className);
     button.innerHTML = this.buttonName;
     button.addEventListener("click", () => {
       this.onClick();
     });
 
-    this.buttonWrapper.insertAdjacentElement("beforeend", button);
+    this.$buttonWrapper.insertAdjacentElement("beforeend", button);
   }
 }
