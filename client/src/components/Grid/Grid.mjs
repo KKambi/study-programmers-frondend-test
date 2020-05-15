@@ -1,17 +1,24 @@
 import ObserverFactory from "../../utils/ObserverFactory.mjs";
 
-export default class Grid {
-  grid = null;
+export default class $grid {
+  $grid = null;
   data = null;
+  modalContainer = null;
+  modalContainerName = null;
 
-  constructor({ target, data }) {
+  constructor({ target, data, modalContainerName }) {
     const grid = document.createElement("div");
     grid.className = "grid-wrapper";
-    this.grid = grid;
+    this.$grid = grid;
 
     this.data = data;
+    this.modalContainerName = modalContainerName;
+    this.modalContainer = document.querySelector(`.${this.modalContainerName}`);
 
     target.insertAdjacentElement("beforeend", grid);
+
+    this.setOpenModal();
+    this.addDisableHandler();
 
     this.render();
   }
@@ -41,6 +48,46 @@ export default class Grid {
     factory.startObserve(photos);
   }
 
+  setOpenModal() {
+    this.$grid.addEventListener("click", (e) => {
+      console.log(e);
+      if (e.target.className === "grid-img") {
+        //dataset.src와 dataset.name을 가져온다
+        const name = e.target.dataset.name;
+        const url = e.target.dataset.src;
+
+        //모달 이미지 상태를 전달한다
+
+        const image = this.modalContainer.querySelector("img");
+        image.dataset.name = name;
+        image.src = url;
+
+        //모달을 오픈한다
+        this.modalContainer.style.display = "block";
+      }
+    });
+  }
+
+  addDisableHandler() {
+    //윈도우 객체에 keydown 이벤트 추가
+    window.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27) {
+        this.closeModal();
+      }
+    });
+
+    //모달 컨테이너 객체에 click 이벤트 추가
+    this.modalContainer.addEventListener("click", (e) => {
+      if (e.target.className === "grid-image-modal") {
+        this.closeModal();
+      }
+    });
+  }
+
+  closeModal() {
+    this.modalContainer.style.display = "none";
+  }
+
   render() {
     if (this.data === null) return;
 
@@ -58,13 +105,12 @@ export default class Grid {
     for (let i = 0; i < dataCnt; i++) {
       const { name, url } = this.data[i];
 
-      const row = `
-        <div class="grid-row data-row-${i}">
-          <img class="grid-img" data-src="${url}">
-        </div>
-      `;
+      const gridImage = document.createElement("img");
+      gridImage.classList.add("grid-img");
+      gridImage.dataset.name = name;
+      gridImage.dataset.src = url;
 
-      this.grid.insertAdjacentHTML("beforeend", row);
+      this.$grid.insertAdjacentElement("beforeend", gridImage);
     }
   }
 }

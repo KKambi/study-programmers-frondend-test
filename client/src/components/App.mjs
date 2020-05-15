@@ -1,9 +1,9 @@
 import SearchBar from "./SerachBar/SearchBar.mjs";
+import ImageModal from "./Modal/ImageModal.mjs";
 import Grid from "./Grid/Grid.mjs";
 
 export default class App {
   root = null;
-  test = 3;
 
   constructor() {
     //루트
@@ -41,6 +41,12 @@ export default class App {
       className: "search-bar",
     });
 
+    //그리드의 이미지를 띄울 모달
+    const gridImageModal = new ImageModal({
+      target: this.root,
+      className: "grid-image-modal",
+    });
+
     //그리드 테스트 데이터
     const gridTestData = [];
     for (let i = 0; i <= 17; i++) {
@@ -55,6 +61,7 @@ export default class App {
     const photoGrid = new Grid({
       target: this.root,
       data: gridTestData,
+      modalContainerName: "grid-image-modal",
     });
 
     //그리드 옵저버 설정
